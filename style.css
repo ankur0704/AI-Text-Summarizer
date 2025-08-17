@@ -1,0 +1,28 @@
+/* Main app background */
+.stApp {
+    background-color: #f0f2f6;
+}
+
+/* Style the title */
+.st-emotion-cache-10trblm {
+    color: #1E3A8A; /* A nice deep blue */
+    font-family: 'Georgia', serif;
+}
+
+/* Style the primary button */
+.stButton>button {
+    border: 2px solid #1E3A8A;
+    border-radius:10px;
+    color: #1E3A8A;
+    background-color: #ffffff;
+}
+
+.stButton>button:hover {
+    border: 2px solid #3B82F6;
+    color: #3B82F6;
+}
+
+/* Style the sidebar */
+.st-emotion-cache-16txtl3 {
+    background-color: #DBEAFE; /* Light blue background for sidebar */
+}

@@ -1,28 +1,119 @@
-/* Main app background */
-.stApp {
-    background-color: #f0f2f6;
+/* --- Global Styles & Font --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
 }
 
-/* Style the title */
-.st-emotion-cache-10trblm {
-    color: #1E3A8A; /* A nice deep blue */
-    font-family: 'Georgia', serif;
+/* --- THEME: LIGHT MODE --- */
+[data-theme="light"] .stApp {
+    background-color: #F1F5F9; /* Very Light Slate */
 }
 
-/* Style the primary button */
+[data-theme="light"] .st-emotion-cache-10trblm {
+    color: #0F172A; /* Dark Slate */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+[data-theme="light"] .st-emotion-cache-1629p8f h5 {
+    color: #475569; /* Medium Slate */
+    text-align: center;
+}
+
+[data-theme="light"] .stTextArea textarea {
+    border: 1px solid #CBD5E1;
+    background-color: #FFFFFF;
+    color: #334155;
+}
+
+[data-theme="light"] .st-emotion-cache-16txtl3 {
+    background-color: #FFFFFF;
+    border-right: 1px solid #E2E8F0;
+}
+
+[data-theme="light"] .st-emotion-cache-p5msec {
+    border: 1px solid #CBD5E1;
+    background-color: #FFFFFF;
+}
+
+[data-theme="light"] .st-emotion-cache-p5msec summary {
+    font-weight: 600;
+    color: #0F172A;
+}
+
+
+/* --- THEME: DARK MODE --- */
+[data-theme="dark"] .stApp {
+    background-color: #0F172A; /* Dark Slate */
+}
+
+[data-theme="dark"] .st-emotion-cache-10trblm {
+    color: #F1F5F9; /* Light Slate */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+[data-theme="dark"] .st-emotion-cache-1629p8f h5 {
+    color: #94A3B8; /* Lighter Slate */
+    text-align: center;
+}
+
+[data-theme="dark"] .stTextArea textarea {
+    border: 1px solid #334155;
+    background-color: #1E293B;
+    color: #E2E8F0;
+}
+
+[data-theme="dark"] .st-emotion-cache-16txtl3 {
+    background-color: #1E293B; /* Darker Slate for sidebar */
+    border-right: 1px solid #334155;
+}
+
+[data-theme="dark"] .st-emotion-cache-p5msec {
+    border: 1px solid #334155;
+    background-color: #1E293B;
+}
+
+[data-theme="dark"] .st-emotion-cache-p5msec summary {
+    font-weight: 600;
+    color: #F1F5F9;
+}
+
+
+/* --- SHARED STYLES (for both themes) --- */
+.stTextArea textarea {
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-family: 'Inter', sans-serif;
+}
+
+.stTextArea textarea:focus {
+    border-color: #14B8A6; /* Teal border on focus */
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+}
+
 .stButton>button {
-    border: 2px solid #1E3A8A;
-    border-radius:10px;
-    color: #1E3A8A;
-    background-color: #ffffff;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(90deg, #14B8A6, #0D9488); /* A nice teal gradient */
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .stButton>button:hover {
-    border: 2px solid #3B82F6;
-    color: #3B82F6;
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* Style the sidebar */
-.st-emotion-cache-16txtl3 {
-    background-color: #DBEAFE; /* Light blue background for sidebar */
+.stButton>button:active {
+    transform: translateY(0px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }

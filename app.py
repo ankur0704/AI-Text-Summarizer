@@ -36,7 +36,7 @@ except Exception as e:
 
 
 # --- Header and Title ---
-st.title("✨ Gemini AI Text Summarizer")
+st.title(" Gemini AI Text Summarizer")
 st.markdown("##### Paste any text below, choose your desired summary style, and let Gemini do the rest!")
 
 

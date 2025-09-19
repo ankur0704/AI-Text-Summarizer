@@ -2,9 +2,62 @@
 # AI Text Summarizer (Gemini + Streamlit)
 
 A simple, user-friendly web app that uses Google Gemini to summarize long text. Built with Python and Streamlit, this project focuses on easy setup and a smooth user experience for summarizing articles, notes, and documents.
-
 ---
 
+## README (current project status)
+
+This README reflects the repository as it stands now (Streamlit UI + Gemini model integration with chunked summarization and a progress UI).
+
+Current features
+
+- Streamlit web UI (`app.py`) for pasting text and choosing summary options.
+- Integration with Google Gemini via `google.generativeai`.
+- Chunked summarization: long inputs are split into character-based chunks (preferred sentence boundaries) and summarized piecewise; intermediate summaries are consolidated into the final summary.
+- Progress feedback: a progress bar and status text show per-chunk progress so long jobs feel responsive.
+- Quick mode: optional faster, higher-level summaries.
+
+How to run (recap)
+
+1. Create and activate a Python virtual environment.
+2. Install dependencies with `pip install -r requirements.txt`.
+3. Add `GOOGLE_API_KEY` to a `.env` file in the repo root.
+4. Run with `streamlit run app.py` and open the printed URL.
+
+Important files
+
+- `app.py` — main app (summarization flow and UI).
+- `style.css` — UI styling and `.app-status` class used to style progress/status messages.
+- `requirements.txt` — Python packages used by the project.
+
+Quick troubleshooting
+
+- If the app errors about API key: ensure `.env` has `GOOGLE_API_KEY` and restart Streamlit.
+- For slow/large jobs: enable chunking (default) or enable Quick mode.
+
+Priority list of enhancement suggestions (short-term → long-term)
+
+1. Token-based chunking (High priority)
+	- Replace character-based chunks with token counts using a tokenizer (e.g., tiktoken or similar). This gives accurate control over model input sizes and avoids unexpected truncation.
+
+2. Concurrency / batching (Medium)
+	- Summarize multiple chunks in parallel (careful with rate limits). This reduces wall-clock time but needs concurrency handling and rate-limit backoff.
+
+3. Rate-limit & retry handling (High)
+	- Add exponential backoff and retries for transient API failures, and graceful error messages for rate limits.
+
+4. Save / load session (Medium)
+	- Allow users to save intermediate chunk summaries and resume a session — helpful for very long workflows.
+
+5. Add tests and CI (Medium)
+	- Unit tests that mock `model.generate_content` and validate chunking/consolidation behavior. Add CI (GitHub Actions) to run tests on PRs.
+
+6. UI improvements (Low)
+	- Add estimated ETA, chunk count display, and an explicit styled status box using `.app-status`.
+
+7. Sample data and screenshots (Low)
+	- Add a `examples/` folder with demo long-text files and screenshot images for the README and GitHub preview.
+
+If you want, I can implement any of the above enhancements. Pick one or two and I'll add them to a todo list and implement them.
 ## Table of contents
 
 - Overview

@@ -6,6 +6,38 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
 /* ============================= */
 /* 🌞 LIGHT MODE (Clean + Pastel) */
 /* ============================= */
@@ -68,11 +100,16 @@ body {
     font-size: 1rem;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,180,216,0.3);
+    animation: fadeIn 0.5s ease-out;
 }
 
 [data-theme="light"] .stButton>button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,180,216,0.4);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,180,216,0.5);
+}
+
+[data-theme="light"] .stButton>button:active {
+    transform: scale(0.98);
 }
 
 /* Expander */
@@ -81,12 +118,18 @@ body {
     background: rgba(255,255,255,0.9);
     border: 1px solid #dee2e6;
     padding: 10px;
+    animation: fadeIn 0.6s ease-out;
 }
 
 [data-theme="light"] .st-emotion-cache-p5msec summary {
     font-weight: 600;
     color: #0077b6;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .st-emotion-cache-p5msec summary:hover {
+    color: #00b4d8;
 }
 
 /* ============================= */
@@ -152,11 +195,16 @@ body {
     font-size: 1rem;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,245,212,0.3);
+    animation: fadeIn 0.5s ease-out;
 }
 
 [data-theme="dark"] .stButton>button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,245,212,0.5);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,245,212,0.5);
+}
+
+[data-theme="dark"] .stButton>button:active {
+    transform: scale(0.98);
 }
 
 /* Expander */
@@ -166,10 +214,16 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.15);
     padding: 10px;
+    animation: fadeIn 0.6s ease-out;
 }
 
 [data-theme="dark"] .st-emotion-cache-p5msec summary {
     font-weight: 600;
     color: #00f5d4;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .st-emotion-cache-p5msec summary:hover {
+    color: #00bbf9;
 }

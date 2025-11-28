@@ -69,7 +69,7 @@ def summarize_chunk(chunk: str, model, tone: str, sentences: int, bullet: bool =
         # model.generate_content is expected to return an object with `.text`
         return getattr(resp, "text", str(resp))
     except Exception as e:
-        raise SummarizationError("summarization failed") from e
+        raise SummarizationError(f"summarization failed: {str(e)}") from e
 
 
 def consolidate_and_summarize(intermediate_summaries: list, model, tone: str, summary_length: int) -> str:
@@ -87,4 +87,4 @@ Chunk summaries:
         resp = model.generate_content(prompt)
         return getattr(resp, "text", str(resp))
     except Exception as e:
-        raise SummarizationError("final consolidation failed") from e
+        raise SummarizationError(f"final consolidation failed: {str(e)}") from e

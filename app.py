@@ -50,9 +50,37 @@ if "summary_output" not in st.session_state:
 # Sidebar for customization options
 with st.sidebar:
     st.header("⚙️ Customization")
-    summary_length = st.slider("Summary Length (sentences):", min_value=1, max_value=10, value=3, step=1)
-    summary_tone = st.selectbox("Summary Tone:", ["Formal", "Casual", "Professional", "Bullet Points"])
+    
+    # Preset templates
+    preset = st.selectbox(
+        "📋 Quick Presets",
+        ["Custom", "Quick Summary", "Executive Brief", "Detailed Report", "Key Points"],
+        help="Choose a preset to auto-configure summary settings"
+    )
+    
+    # Apply preset if selected
+    if preset == "Quick Summary":
+        summary_length = 2
+        summary_tone = "Casual"
+    elif preset == "Executive Brief":
+        summary_length = 3
+        summary_tone = "Formal"
+    elif preset == "Detailed Report":
+        summary_length = 5
+        summary_tone = "Professional"
+    elif preset == "Key Points":
+        summary_length = 4
+        summary_tone = "Bullet Points"
+    else:
+        summary_length = st.slider("Summary Length (sentences):", min_value=1, max_value=10, value=3, step=1)
+        summary_tone = st.selectbox("Summary Tone:", ["Formal", "Casual", "Professional", "Bullet Points"])
+    
+    # If preset is selected, show the configured values
+    if preset != "Custom":
+        st.info(f"✓ Preset applied: {preset}")
+    
     # Chunking / performance options
+    st.markdown("---")
     enable_chunking = st.checkbox("Enable chunked summarization (recommended for long text)", value=True)
     chunk_size = st.number_input("Approx. characters per chunk:", min_value=1000, max_value=20000, value=4000, step=500)
     quick_mode = st.checkbox("Quick mode (faster, less detailed)", value=False)
@@ -111,9 +139,28 @@ if summarize_button and input_text:
             
             # Store summary in session state
             st.session_state.summary_output = final_summary
-
-            # Display summary with copy button
+            
+            # Calculate statistics
+            input_words = len(input_text.split())
+            output_words = len(final_summary.split())
+            reduction_percent = ((input_words - output_words) / input_words * 100) if input_words > 0 else 0
+            
+            # Display summary with statistics
             st.markdown("---")
+            
+            # Statistics row
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("📝 Input Words", f"{input_words:,}")
+            with col2:
+                st.metric("✨ Output Words", f"{output_words:,}")
+            with col3:
+                st.metric("📊 Reduction", f"{reduction_percent:.1f}%")
+            with col4:
+                st.metric("⚡ Efficiency", f"{output_words / max(input_words, 1) * 100:.1f}%")
+            
+            st.markdown("---")
+            
             col1, col2 = st.columns([0.9, 0.1])
             with col1:
                 st.subheader("📄 Your Summary")

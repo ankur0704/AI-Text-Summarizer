@@ -153,6 +153,24 @@ Open the URL Streamlit prints in your browser (usually http://localhost:8501).
 	- Approx. characters per chunk: controls chunk size (default 4000).
 	- Quick mode: faster, less detailed summaries.
 
+## Testing
+
+A comprehensive test suite is included to validate text-processing logic, API mocking, input validation, and error handling.
+
+**Quick start:**
+```bash
+pytest -q
+```
+
+Expected output: `7 passed in 0.02s`
+
+**For detailed testing instructions:** See [`TESTING.md`](TESTING.md)
+
+The test suite includes:
+- Unit tests for `chunk_text()` (chunking edge cases, invalid inputs)
+- API mocking tests for `summarize_chunk()` and `consolidate_and_summarize()`
+- Error-handling tests that verify proper exception wrapping and logging
+
 ## Usage guide
 
 - Paste or type text into the main input area.

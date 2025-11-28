@@ -1,63 +1,9 @@
-
 # AI Text Summarizer (Gemini + Streamlit)
 
 A simple, user-friendly web app that uses Google Gemini to summarize long text. Built with Python and Streamlit, this project focuses on easy setup and a smooth user experience for summarizing articles, notes, and documents.
+
 ---
 
-## README (current project status)
-
-This README reflects the repository as it stands now (Streamlit UI + Gemini model integration with chunked summarization and a progress UI).
-
-Current features
-
-- Streamlit web UI (`app.py`) for pasting text and choosing summary options.
-- Integration with Google Gemini via `google.generativeai`.
-- Chunked summarization: long inputs are split into character-based chunks (preferred sentence boundaries) and summarized piecewise; intermediate summaries are consolidated into the final summary.
-- Progress feedback: a progress bar and status text show per-chunk progress so long jobs feel responsive.
-- Quick mode: optional faster, higher-level summaries.
-
-How to run (recap)
-
-1. Create and activate a Python virtual environment.
-2. Install dependencies with `pip install -r requirements.txt`.
-3. Add `GOOGLE_API_KEY` to a `.env` file in the repo root.
-4. Run with `streamlit run app.py` and open the printed URL.
-
-Important files
-
-- `app.py` — main app (summarization flow and UI).
-- `style.css` — UI styling and `.app-status` class used to style progress/status messages.
-- `requirements.txt` — Python packages used by the project.
-
-Quick troubleshooting
-
-- If the app errors about API key: ensure `.env` has `GOOGLE_API_KEY` and restart Streamlit.
-- For slow/large jobs: enable chunking (default) or enable Quick mode.
-
-Priority list of enhancement suggestions (short-term → long-term)
-
-1. Token-based chunking (High priority)
-	- Replace character-based chunks with token counts using a tokenizer (e.g., tiktoken or similar). This gives accurate control over model input sizes and avoids unexpected truncation.
-
-2. Concurrency / batching (Medium)
-	- Summarize multiple chunks in parallel (careful with rate limits). This reduces wall-clock time but needs concurrency handling and rate-limit backoff.
-
-3. Rate-limit & retry handling (High)
-	- Add exponential backoff and retries for transient API failures, and graceful error messages for rate limits.
-
-4. Save / load session (Medium)
-	- Allow users to save intermediate chunk summaries and resume a session — helpful for very long workflows.
-
-5. Add tests and CI (Medium)
-	- Unit tests that mock `model.generate_content` and validate chunking/consolidation behavior. Add CI (GitHub Actions) to run tests on PRs.
-
-6. UI improvements (Low)
-	- Add estimated ETA, chunk count display, and an explicit styled status box using `.app-status`.
-
-7. Sample data and screenshots (Low)
-	- Add a `examples/` folder with demo long-text files and screenshot images for the README and GitHub preview.
-
-If you want, I can implement any of the above enhancements. Pick one or two and I'll add them to a todo list and implement them.
 ## Table of contents
 
 - Overview
@@ -78,11 +24,18 @@ This project provides a small web UI where users paste or upload text and ask Ge
 
 ## Features
 
-- Summarization powered by Google Gemini.
-- Adjustable summary length (in sentences) and tone (Formal, Casual, Professional, Bullet Points).
-- Chunked summarization with per-chunk progress feedback for long inputs.
-- Quick mode (faster, higher-level summaries) for speed-sensitive use.
-- Clean Streamlit UI with collapsible summary output.
+- **Summarization powered by Google Gemini** (gemini-2.0-flash model).
+- **Preset templates** — Quick Summary, Executive Brief, Detailed Report, Key Points for one-click configuration.
+- **Adjustable summary options** — Control length (1–10 sentences) and tone (Formal, Casual, Professional, Bullet Points).
+- **Chunked summarization** with per-chunk progress feedback for long inputs (character-based chunks with sentence-boundary preference).
+- **Quick mode** — Faster, higher-level summaries for speed-sensitive use.
+- **Summary statistics** — Display input word count, output word count, reduction percentage, and efficiency ratio.
+- **Character counter** — Live word count below the input area.
+- **Copy-to-clipboard** button with toast confirmation for easy summary sharing.
+- **Welcome screen** — Helpful tips, feature list, and sample text loader when starting.
+- **Smooth animations** — CSS transitions and keyframe animations (fade-in, slide-in, button hover effects).
+- **Dark and light mode support** — Professional UI theming with glassmorphic design.
+- **Comprehensive test suite** — 7 unit tests covering chunking, API mocking, and error handling.
 
 ## How it works (workflow)
 
@@ -96,62 +49,71 @@ This project provides a small web UI where users paste or upload text and ask Ge
 
 ## Quickstart (local)
 
-Prerequisites
+**Prerequisites**
 
 - Python 3.8+
-- Google Gemini API key (AI Studio / Google Generative Models)
+- Google Gemini API key (get it from [Google AI Studio](https://aistudio.google.com/app/apikey))
 
-1) Clone the repo
+**Step 1: Clone the repo**
 
-git clone https://github.com/YOUR_USERNAME/AI-Text-Summarizer.git
+```powershell
+git clone https://github.com/ankur0704/AI-Text-Summarizer.git
 cd AI-Text-Summarizer
+```
 
-2) Create and activate a virtual environment
+**Step 2: Create and activate a virtual environment**
 
-Windows (PowerShell)
-
+Windows (PowerShell):
 ```powershell
 python -m venv venv
 venv\Scripts\Activate
 ```
 
-macOS / Linux
-
+macOS / Linux:
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-3) Install dependencies
+**Step 3: Install dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4) Add your API key
+**Step 4: Add your API key**
 
-Create a `.env` file in the repository root with:
+Create a `.env` file in the repository root:
 
 ```
 GOOGLE_API_KEY="AIza...YourSecretGoogleApiKey"
 ```
 
-5) Run the app
+**Step 5: Run the app**
 
-```powershell
+```bash
 streamlit run app.py
 ```
 
-Open the URL Streamlit prints in your browser (usually http://localhost:8501).
+Open the URL in your browser (usually http://localhost:8501).
 
 ## Configuration
 
-- Sidebar options
+- **Preset templates** (quick-select in sidebar)
+	- Quick Summary: 2 sentences, Casual tone
+	- Executive Brief: 3 sentences, Formal tone
+	- Detailed Report: 5 sentences, Professional tone
+	- Key Points: Bullet-point format
+- **Sidebar options**
 	- Summary Length: number of sentences (1–10).
 	- Summary Tone: Formal, Casual, Professional, Bullet Points.
 	- Enable chunked summarization: recommended for long inputs.
 	- Approx. characters per chunk: controls chunk size (default 4000).
 	- Quick mode: faster, less detailed summaries.
+- **Input area features**
+	- Character counter displays live word count.
+	- Clear button resets input instantly.
+	- Sample text loader in welcome screen for testing.
 
 ## Testing
 
@@ -173,34 +135,74 @@ The test suite includes:
 
 ## Usage guide
 
-- Paste or type text into the main input area.
-- Optionally tweak sidebar settings.
-- Click "Summarize Text" and wait for the progress bar and status messages.
-- Expand "View Your Summary" to read or copy the output.
+1. **Open the app** — Run `streamlit run app.py` and open the browser link.
+2. **Load sample text** (optional) — Click "Load Sample Text" in the welcome screen to test.
+3. **Paste or type text** — Paste your article, notes, or document in the input area.
+4. **Choose a preset** (optional) — Select a preset template (Quick Summary, Executive Brief, etc.) to auto-configure settings.
+5. **Customize settings** (optional) — Adjust summary length, tone, chunk size in the sidebar.
+6. **Click "Summarize Text"** — The app processes the text with a progress bar.
+7. **View results** — Expand "View Your Summary" to read the output.
+8. **Copy summary** — Click "Copy to Clipboard" for easy sharing.
+9. **View statistics** — See summary statistics (input/output words, reduction %, efficiency) below the summary.
 
 ## Troubleshooting & tips
 
-- API key errors: confirm your `GOOGLE_API_KEY` is set in `.env` and valid. Streamlit shows an error if the app cannot connect.
-- Long documents: enable chunking (default) and increase chunk size carefully — larger chunks may cause longer per-call latency or API limits.
-- Quick mode: use when you just want a fast gist instead of a detailed summary.
-- If you see rate limits or timeouts from Gemini, reduce chunk size or summarize in multiple passes.
+| Issue | Solution |
+|-------|----------|
+| **API key errors** | Confirm your `GOOGLE_API_KEY` is set in `.env` and valid. Restart Streamlit if you just added it. |
+| **"Summarization failed" error** | Check your API key has access to Gemini API. Visit [Google AI Studio](https://aistudio.google.com/app/apikey) to verify. |
+| **Long documents timeout** | Enable chunking (default) and try reducing chunk size. For very large texts (>100KB), test with a smaller excerpt first. |
+| **Slow performance** | Enable "Quick mode" in the sidebar for faster, less detailed summaries. Larger chunk sizes also speed up processing. |
+| **Rate limit errors** | Reduce chunk size to send fewer/shorter API requests. Wait a few seconds and retry. Consider batching requests. |
+| **Copy button not working** | Ensure JavaScript is enabled in your browser. Try refreshing the page. |
+
+**Performance tips for long documents**
+
+- The app supports **chunked summarization** by default: long inputs are split into smaller pieces, summarized individually, then combined. This prevents timeouts and gives visible progress.
+- Enable **"Quick mode"** in the sidebar for faster, higher-level summaries when you only need the gist.
+- Use **preset templates** to quickly apply optimized settings for your use case (Executive Brief for business, Detailed Report for research, etc.).
+- For extremely long texts (>5MB), consider pasting shorter excerpts or running multiple summarizations sequentially.
 
 ## Development notes
 
-- Main files
-	- `app.py` — Streamlit app and summarization flow.
-	- `style.css` — UI styling.
+- **Main files**
+	- `app.py` — Streamlit web interface with UI components and chunked summarization flow.
+	- `summarizer.py` — Testable business logic module (chunking, summarization, error handling).
+	- `style.css` — Modern UI styling with animations, light/dark mode support, glassmorphic design.
 	- `requirements.txt` — Python dependencies.
 
-- Tests: None included by default. To add tests, mock `model.generate_content` and assert chunking + consolidation behavior.
+- **Tests**
+	- `tests/test_summarizer_chunking.py` — 3 tests validating text chunking behavior (edge cases, invalid inputs).
+	- `tests/test_summarizer_api.py` — 4 tests for API mocking, error handling, and consolidation.
+	- `tests/conftest.py` — pytest configuration for proper module imports.
+	- `TESTING.md` — Comprehensive testing guide with setup, running tests, and extension instructions.
+
+- **Architecture**
+	- Modular design: business logic in `summarizer.py`, UI in `app.py` for clean separation of concerns.
+	- Mock-based testing: uses `DummyModel` to simulate Gemini API without external calls (fast, reliable, cost-effective).
+	- Error handling: custom `SummarizationError` exception with detailed error messages for debugging.
 
 ## Contributing
 
 Contributions are welcome. A simple workflow:
 
 1. Fork the repo and create a branch for your change.
-2. Make your changes and add tests where appropriate.
-3. Open a pull request describing your change.
+2. Make your changes and add tests where appropriate (see [`TESTING.md`](TESTING.md)).
+3. Run `pytest -q` to ensure tests pass.
+4. Open a pull request describing your change.
+
+## Future enhancements
+
+Potential improvements for future releases:
+
+1. **Token-based chunking** — Replace character-based chunks with token counts using a tokenizer (e.g., tiktoken). Provides accurate control over model input sizes.
+2. **Parallel chunk processing** — Summarize multiple chunks concurrently with rate-limit backoff to reduce wall-clock time.
+3. **Save / resume sessions** — Allow users to save intermediate summaries and resume long workflows.
+4. **Estimated time-to-completion (ETA)** — Display predicted finish time based on chunk count and average processing speed.
+5. **File upload support** — Accept PDF, DOCX, TXT files in addition to text input.
+6. **Export options** — Download summaries as PDF, Markdown, or plain text.
+7. **Multi-language support** — Detect and summarize text in languages other than English.
+8. **User analytics** — Track summarization metrics (avg. compression ratio, processing time, etc.) for portfolio projects.
 
 ## License
 
@@ -208,18 +210,4 @@ This project is provided as-is. Add your preferred license file if you plan to p
 
 ---
 
-If you want, I can also:
-- Add a compact `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`.
-- Generate a short `docs/` page or GitHub Pages site with screenshots.
-- Create a small example long-text file to demo chunking behavior locally.
-
----
-
-Happy summarizing! ✍️
-
-
-## Performance tips for long documents
-
-- The app supports chunked summarization: long inputs are split into smaller pieces which are summarized individually and then combined. This reduces the chance of timeouts and gives faster visible progress when working with very large texts.
-- Enable "Quick mode" in the sidebar for a faster, higher-level summary when you only need the gist. Quick mode trades some detail for speed.
-- If the text is extremely long (many MBs), consider pasting a shorter excerpt or running multiple smaller summarizations.
+**Happy summarizing!** ✍️ If you have questions or suggestions, feel free to open an issue or discussion on GitHub.
